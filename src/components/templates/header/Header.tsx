@@ -13,7 +13,7 @@ export const Header = () => {
   return (
     <header className="py-5">
       <nav>
-        <Container className="flex items-center justify-between">
+        <Container className="flex items-center justify-between mx-16">
           <Link href="/" title={t('common.homepage')}>
             <Image 
               src="/assets/svg/blog-logo.svg"
@@ -28,7 +28,7 @@ export const Header = () => {
               onClick={() => window.open('https://rebelfi.io', '_blank', 'noopener,noreferrer')}
               className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 active:bg-blue-800 shadow-sm hover:shadow-md transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
             >
-              Visit RebelFi
+              Open RebelFi
             </button>
             <LanguageSelector />
           </div>

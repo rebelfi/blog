@@ -1,6 +1,6 @@
 import { dir } from 'i18next';
 import type { Metadata, Viewport } from 'next';
-import { Urbanist } from 'next/font/google';
+import { Roboto } from 'next/font/google';
 import { draftMode } from 'next/headers';
 
 import { ContentfulPreviewProvider } from '@src/components/features/contentful';
@@ -26,7 +26,11 @@ export async function generateStaticParams(): Promise<LayoutProps['params'][]> {
   return locales.map(locale => ({ locale }));
 }
 
-const urbanist = Urbanist({ subsets: ['latin'], variable: '--font-urbanist' });
+const roboto = Roboto({ 
+  subsets: ['latin'],
+  weight: ['400', '500', '700'],
+  variable: '--font-roboto'
+});
 
 const allowedOriginList = ['https://app.contentful.com', 'https://app.eu.contentful.com'];
 
@@ -54,12 +58,12 @@ export default async function PageLayout({ children, params }: LayoutProps) {
             enableLiveUpdates={preview}
             targetOrigin={allowedOriginList}
           >
-            <main className={`${urbanist.variable} font-sans`}>
+            <main className={`${roboto.variable} font-sans`}>
               <Header />
               {children}
               <Footer />
             </main>
-            <div id="portal" className={`${urbanist.variable} font-sans`} />
+            <div id="portal" className={`${roboto.variable} font-sans`} />
           </ContentfulPreviewProvider>
         </TranslationsProvider>
       </body>

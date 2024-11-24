@@ -11,6 +11,7 @@ import { ArticleLabel } from '@src/components/features/article/ArticleLabel';
 import { CtfImage } from '@src/components/features/contentful';
 import { FormatDate } from '@src/components/shared/format-date';
 import { PageBlogPostFieldsFragment } from '@src/lib/__generated/sdk';
+import { Container } from '@src/components/shared/container';
 
 interface ArticleHeroProps {
   article: PageBlogPostFieldsFragment;
@@ -29,56 +30,58 @@ export const ArticleHero = ({
   const { title, shortDescription, publishedDate } = useContentfulLiveUpdates(article);
 
   return (
-    <div
-      className={twMerge(
-        `flex flex-col overflow-hidden rounded-2xl border border-gray300 shadow-lg`,
-        isReversedLayout ? 'lg:flex-row-reverse' : 'lg:flex-row',
-      )}
-    >
-      <div className="flex-1 basis-1/2" {...inspectorProps({ fieldId: 'featuredImage' })}>
-        {article.featuredImage && (
-          <CtfImage
-            nextImageProps={{ className: 'w-full', priority: true, sizes: undefined }}
-            {...article.featuredImage}
-          />
+    <Container>
+      <div
+        className={twMerge(
+          `flex flex-col overflow-hidden rounded-2xl border border-gray300 shadow-lg`,
+          isReversedLayout ? 'lg:flex-row-reverse' : 'lg:flex-row',
         )}
-      </div>
+      >
+        <div className="flex-1 basis-1/2" {...inspectorProps({ fieldId: 'featuredImage' })}>
+          {article.featuredImage && (
+            <CtfImage
+              nextImageProps={{ className: 'w-full', priority: true, sizes: undefined }}
+              {...article.featuredImage}
+            />
+          )}
+        </div>
 
-      <div className="relative flex flex-1 basis-1/2 flex-col justify-center py-6 px-4 lg:px-16 lg:py-12 xl:px-24">
-        <div className="mb-2 flex flex-wrap items-center">
-          {isFeatured && (
-            <ArticleLabel
+        <div className="relative flex flex-1 basis-1/2 flex-col justify-center py-6 px-4 lg:px-16 lg:py-12 xl:px-24">
+          <div className="mb-2 flex flex-wrap items-center">
+            {isFeatured && (
+              <ArticleLabel
+                className={twMerge(
+                  'ml-auto pl-2 lg:absolute lg:top-8 xl:top-12',
+                  isReversedLayout ? 'lg:left-6 xl:left-12' : 'lg:right-6 xl:right-12',
+                )}
+              >
+                {t('article.featured')}
+              </ArticleLabel>
+            )}
+            <div
               className={twMerge(
-                'ml-auto pl-2 lg:absolute lg:top-8 xl:top-12',
-                isReversedLayout ? 'lg:left-6 xl:left-12' : 'lg:right-6 xl:right-12',
+                'ml-auto hidden pl-2 text-xs text-gray600',
+                isReversedLayout ? 'lg:block' : '',
               )}
+              {...inspectorProps({ fieldId: 'publishedDate' })}
             >
-              {t('article.featured')}
-            </ArticleLabel>
+              {/* <FormatDate date={publishedDate} /> */}
+            </div>
+          </div>
+          <h1 {...inspectorProps({ fieldId: 'title' })}>{title}</h1>
+          {shortDescription && (
+            <p className="mt-2 text-lg" {...inspectorProps({ fieldId: 'shortDescription' })}>
+              {shortDescription}
+            </p>
           )}
           <div
-            className={twMerge(
-              'ml-auto hidden pl-2 text-xs text-gray600',
-              isReversedLayout ? 'lg:block' : '',
-            )}
+            className={twMerge('mt-2 text-xs text-gray600', isReversedLayout ? 'lg:hidden' : '')}
             {...inspectorProps({ fieldId: 'publishedDate' })}
           >
-            <FormatDate date={publishedDate} />
+            {/* <FormatDate date={publishedDate} /> */}
           </div>
         </div>
-        <h1 {...inspectorProps({ fieldId: 'title' })}>{title}</h1>
-        {shortDescription && (
-          <p className="mt-2" {...inspectorProps({ fieldId: 'shortDescription' })}>
-            {shortDescription}
-          </p>
-        )}
-        <div
-          className={twMerge('mt-2 text-xs text-gray600', isReversedLayout ? 'lg:hidden' : '')}
-          {...inspectorProps({ fieldId: 'publishedDate' })}
-        >
-          <FormatDate date={publishedDate} />
-        </div>
       </div>
-    </div>
+    </Container>
   );
 };
