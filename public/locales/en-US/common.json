@@ -7,14 +7,15 @@
     "latestArticles": "Latest articles"
   },
   "common": {
+    "blogName": "DeFi Unlocked",
     "regionalSettings": "Regional Settings",
     "homepage": "Homepage",
     "language": "Language",
     "languageDrawer": "Toggle language drawer"
   },
   "footer": {
-    "aboutUs": "about us",
-    "description": "Our company specialises in the development of advanced technologies for a wide range of industries. We use cutting-edge techniques and algorithms to create intelligent systems that can help businesses automate tasks, improve efficiency, and drive innovation.",
+    "aboutUs": "About RebelFi",
+    "description": "Pioneering Business-Integrated DeFi: Where traditional business operations meet the future of finance.",
     "powerBy": "Powered by"
   },
   "notFound": {
