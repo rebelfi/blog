@@ -8,7 +8,6 @@ import Link from 'next/link';
 import { HTMLProps } from 'react';
 import { twMerge } from 'tailwind-merge';
 
-import { ArticleAuthor } from '@src/components/features/article/ArticleAuthor';
 import { CtfImage } from '@src/components/features/contentful';
 import { FormatDate } from '@src/components/shared/format-date';
 import { PageBlogPostFieldsFragment } from '@src/lib/__generated/sdk';
@@ -45,7 +44,6 @@ export const ArticleTile = ({ article, className }: ArticleTileProps) => {
           )}
 
           <div className="mt-auto flex items-center">
-            <ArticleAuthor article={article} />
             <div
               className={twMerge('ml-auto pl-2 text-xs text-gray600')}
               {...inspectorProps({ fieldId: 'publishedDate' })}

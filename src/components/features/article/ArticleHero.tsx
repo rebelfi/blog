@@ -7,7 +7,6 @@ import {
 import { useTranslation } from 'react-i18next';
 import { twMerge } from 'tailwind-merge';
 
-import { ArticleAuthor } from '@src/components/features/article/ArticleAuthor';
 import { ArticleLabel } from '@src/components/features/article/ArticleLabel';
 import { CtfImage } from '@src/components/features/contentful';
 import { FormatDate } from '@src/components/shared/format-date';
@@ -47,7 +46,6 @@ export const ArticleHero = ({
 
       <div className="relative flex flex-1 basis-1/2 flex-col justify-center py-6 px-4 lg:px-16 lg:py-12 xl:px-24">
         <div className="mb-2 flex flex-wrap items-center">
-          <ArticleAuthor article={article} />
           {isFeatured && (
             <ArticleLabel
               className={twMerge(
