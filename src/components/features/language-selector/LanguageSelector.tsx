@@ -30,6 +30,13 @@ export const LanguageSelector = () => {
 
     if (isChangeEvent(e)) {
       newLocale = e.target.value;
+    } else {
+      const target = e.target as HTMLElement;
+      newLocale = target.getAttribute('data-locale') as string;
+    }
+
+    if (!newLocale) {
+      return;
     }
 
     // set cookie for next-i18n-router
@@ -39,12 +46,19 @@ export const LanguageSelector = () => {
     document.cookie = `NEXT_LOCALE=${newLocale};expires=${date.toUTCString()};path=/`;
 
     // redirect to the new locale path
-    if (currentLocale === i18nConfig.defaultLocale) {
-      router.push('/' + newLocale + currentPathname);
+    let newPath = currentPathname;
+    
+    if (currentLocale === 'es') {
+      // If we're on Spanish and going to English, remove /es
+      newPath = currentPathname === '/es' ? '/' : currentPathname.replace('/es', '');
     } else {
-      router.push(currentPathname.replace(`/${currentLocale}`, `/${newLocale}`));
+      // If we're on English and going to Spanish, add /es
+      newPath = '/es' + (currentPathname === '/' ? '' : currentPathname);
     }
 
+    console.log('Redirecting to:', newPath);
+    
+    router.push(newPath);
     router.refresh();
   };
 

@@ -30,9 +30,7 @@ export const LanguageSelectorDesktop = ({ localeName, onChange, displayName }) =
   const localesToShow = locales.filter(locale => locale !== currentLocale);
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
-  // Try to extract and match a locale from a pattern of `/en-US/:slug`
-  const pathnameHasLocale = locales.includes(pathname.slice(1, 6));
-  const pathnameWithoutLocale = pathname.slice(6);
+  const pathnameWithoutLocale = currentLocale === 'es' ? pathname.slice(3) : pathname;
 
   useClickOutside(containerRef, setIsOpen);
 
@@ -118,23 +116,17 @@ export const LanguageSelectorDesktop = ({ localeName, onChange, displayName }) =
           {localesToShow?.map((availableLocale, index) => {
             return (
               <li key={availableLocale} role="none">
-                <Link
-                  onKeyDown={e => handleMenuItemKeydown(e, index)}
+                <button
                   role="menuitem"
-                  className="block py-2"
-                  href={
-                    pathnameHasLocale
-                      ? `/${availableLocale}${pathnameWithoutLocale}`
-                      : `/${availableLocale}${pathname}`
-                  }
-                  locale={availableLocale}
+                  className="block w-full text-left py-2 px-4 hover:bg-gray-100"
+                  data-locale={availableLocale}
                   onClick={event => {
                     onChange(event);
                     setIsOpen(false);
                   }}
                 >
                   {displayName(availableLocale).of(localeName(availableLocale))}
-                </Link>
+                </button>
               </li>
             );
           })}
