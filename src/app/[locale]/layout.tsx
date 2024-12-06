@@ -9,6 +9,7 @@ import { Footer } from '@src/components/templates/footer';
 import { Header } from '@src/components/templates/header';
 import initTranslations from '@src/i18n';
 import { locales } from '@src/i18n/config';
+import { GoogleAnalytics } from '@src/components/features/analytics/GoogleAnalytics';
 
 export async function generateMetadata() {
   const metatadata: Metadata = {
@@ -26,10 +27,10 @@ export async function generateStaticParams(): Promise<LayoutProps['params'][]> {
   return locales.map(locale => ({ locale }));
 }
 
-const roboto = Roboto({ 
+const roboto = Roboto({
   subsets: ['latin'],
   weight: ['400', '500', '700'],
-  variable: '--font-roboto'
+  variable: '--font-roboto',
 });
 
 const allowedOriginList = ['https://app.contentful.com', 'https://app.eu.contentful.com'];
@@ -48,6 +49,7 @@ export default async function PageLayout({ children, params }: LayoutProps) {
     <html lang={locale} dir={dir(locale)}>
       <head>
         <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#5bbad5" />
+        {process.env.NEXT_PUBLIC_GA_ID && <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />}
       </head>
 
       <body>
