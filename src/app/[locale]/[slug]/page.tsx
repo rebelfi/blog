@@ -52,6 +52,7 @@ export async function generateMetadata({
   }
 
   const ogImage = blogPost.seoFields?.shareImagesCollection?.items[0]?.url;
+  const urlPath = locale === 'en-US' ? slug : `${locale}/${slug}`;
 
   return {
     title: blogPost.seoFields?.pageTitle,
@@ -59,7 +60,7 @@ export async function generateMetadata({
     openGraph: {
       title: blogPost.seoFields?.pageTitle || '',
       description: blogPost.seoFields?.pageDescription || '',
-      url: `${process.env.NEXT_PUBLIC_BASE_URL}/${locale}/${slug}`,
+      url: `${process.env.NEXT_PUBLIC_BASE_URL}/${urlPath}`,
       siteName: 'RebelFi',
       type: 'article',
       ...(ogImage && { images: [ogImage] }),
