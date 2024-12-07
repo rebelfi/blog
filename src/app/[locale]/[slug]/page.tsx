@@ -1,10 +1,12 @@
 import { draftMode } from 'next/headers';
 import { notFound } from 'next/navigation';
+import { Metadata } from 'next';
 
 import { ArticleContent, ArticleHero, ArticleTileGrid } from '@src/components/features/article';
 import { Container } from '@src/components/shared/container';
 import initTranslations from '@src/i18n';
 import { client, previewClient } from '@src/lib/client';
+import { SeoFieldsFragment } from '@src/lib/__generated/sdk';
 
 export async function generateStaticParams({
   params: { locale },
@@ -21,6 +23,8 @@ export async function generateStaticParams({
   return pageBlogPostCollection.items
     .filter((blogPost): blogPost is NonNullable<typeof blogPost> => Boolean(blogPost?.slug))
     .map(blogPost => {
+      console.log('blogPost.seoFields', blogPost.seoFields);
+      console.log(`image: ${blogPost.seoFields?.shareImagesCollection?.items[0]?.url}`);
       return {
         locale,
         slug: blogPost.slug!,
@@ -32,6 +36,34 @@ interface BlogPageProps {
   params: {
     locale: string;
     slug: string;
+  };
+}
+
+export async function generateMetadata({
+  params: { locale, slug },
+}: BlogPageProps): Promise<Metadata> {
+  const { isEnabled: preview } = draftMode();
+  const gqlClient = preview ? previewClient : client;
+  const { pageBlogPostCollection } = await gqlClient.pageBlogPost({ locale, slug, preview });
+  const blogPost = pageBlogPostCollection?.items[0];
+
+  if (!blogPost) {
+    return {};
+  }
+
+  const ogImage = blogPost.seoFields?.shareImagesCollection?.items[0]?.url;
+
+  return {
+    title: blogPost.seoFields?.pageTitle,
+    description: blogPost.seoFields?.pageDescription,
+    openGraph: {
+      title: blogPost.seoFields?.pageTitle || '',
+      description: blogPost.seoFields?.pageDescription || '',
+      url: `${process.env.NEXT_PUBLIC_BASE_URL}/${locale}/${slug}`,
+      siteName: 'RebelFi',
+      type: 'article',
+      ...(ogImage && { images: [ogImage] }),
+    },
   };
 }
 

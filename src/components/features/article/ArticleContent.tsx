@@ -15,6 +15,8 @@ export const ArticleContent = ({ article }: ArticleContentProps) => {
   const { content } = useContentfulLiveUpdates(article);
   const inspectorProps = useContentfulInspectorMode({ entryId: article.sys.id });
 
+  console.log('article content', content);
+
   return (
     <div {...inspectorProps({ fieldId: 'content' })}>
       <CtfRichText json={content?.json} links={content?.links} />
