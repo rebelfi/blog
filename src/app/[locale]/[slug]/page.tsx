@@ -61,7 +61,7 @@ export async function generateMetadata({
       title: blogPost.seoFields?.pageTitle || '',
       description: blogPost.seoFields?.pageDescription || '',
       url: `${process.env.NEXT_PUBLIC_BASE_URL}/${urlPath}`,
-      siteName: 'RebelFi',
+      siteName: 'RebelFi Blog',
       type: 'article',
       ...(ogImage && { images: [ogImage] }),
     },
