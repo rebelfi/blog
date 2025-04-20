@@ -87,16 +87,21 @@ export default async function Page({ params: { locale, slug } }: BlogPageProps) 
 
   return (
     <>
-      <Container>
+      <Container className="mx-auto mt-6 max-w-7xl px-4 sm:px-6 md:mt-8 md:px-8 lg:mt-10">
         <ArticleHero article={blogPost} isFeatured={isFeatured} isReversedLayout={true} />
       </Container>
-      <Container className="mt-8 max-w-4xl">
+      <Container className="mx-auto mt-6 max-w-4xl px-4 sm:px-6 md:mt-8 md:px-8 lg:mt-10">
         <ArticleContent article={blogPost} />
       </Container>
       {relatedPosts && (
-        <Container className="mt-8 max-w-5xl">
-          <h2 className="mb-4 md:mb-6">{t('article.relatedArticles')}</h2>
-          <ArticleTileGrid className="md:grid-cols-2" articles={relatedPosts} />
+        <Container className="mx-auto my-8 max-w-7xl px-4 sm:px-6 md:my-10 md:px-8 lg:my-16">
+          <h2 className="mb-4 text-xl md:mb-6 md:text-2xl lg:text-3xl">
+            {t('article.relatedArticles')}
+          </h2>
+          <ArticleTileGrid
+            className="grid-cols-1 gap-6 sm:grid-cols-2 md:gap-8 lg:grid-cols-3"
+            articles={relatedPosts}
+          />
         </Container>
       )}
     </>

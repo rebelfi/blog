@@ -37,22 +37,29 @@ export const ArticleHero = ({
           isReversedLayout ? 'lg:flex-row-reverse' : 'lg:flex-row',
         )}
       >
-        <div className="flex-1 basis-1/2" {...inspectorProps({ fieldId: 'featuredImage' })}>
+        <div
+          className="max-h-[350px] flex-1 basis-1/2 overflow-hidden md:max-h-[400px]"
+          {...inspectorProps({ fieldId: 'featuredImage' })}
+        >
           {article.featuredImage && (
             <CtfImage
-              nextImageProps={{ className: 'w-full', priority: true, sizes: undefined }}
+              nextImageProps={{
+                className: 'w-full h-full object-cover',
+                priority: true,
+                sizes: '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw',
+              }}
               {...article.featuredImage}
             />
           )}
         </div>
 
-        <div className="relative flex flex-1 basis-1/2 flex-col justify-center py-6 px-4 lg:px-16 lg:py-12 xl:px-24">
+        <div className="relative flex flex-1 basis-1/2 flex-col justify-center py-4 px-4 sm:py-5 md:py-6 lg:px-12 lg:py-8 xl:px-16">
           <div className="mb-2 flex flex-wrap items-center">
             {isFeatured && (
               <ArticleLabel
                 className={twMerge(
-                  'ml-auto pl-2 lg:absolute lg:top-8 xl:top-12',
-                  isReversedLayout ? 'lg:left-6 xl:left-12' : 'lg:right-6 xl:right-12',
+                  'ml-auto pl-2 lg:absolute lg:top-6 xl:top-8',
+                  isReversedLayout ? 'lg:left-6 xl:left-8' : 'lg:right-6 xl:right-8',
                 )}
               >
                 {t('article.featured')}
@@ -65,12 +72,20 @@ export const ArticleHero = ({
               )}
               {...inspectorProps({ fieldId: 'publishedDate' })}
             >
-              {/* <FormatDate date={publishedDate} /> */}
+              {publishedDate && <FormatDate date={publishedDate} />}
             </div>
           </div>
-          <h1 {...inspectorProps({ fieldId: 'title' })}>{title}</h1>
+          <h1
+            className="text-xl sm:text-2xl md:text-3xl lg:text-4xl"
+            {...inspectorProps({ fieldId: 'title' })}
+          >
+            {title}
+          </h1>
           {shortDescription && (
-            <p className="mt-2 text-lg" {...inspectorProps({ fieldId: 'shortDescription' })}>
+            <p
+              className="mt-2 text-base sm:text-lg"
+              {...inspectorProps({ fieldId: 'shortDescription' })}
+            >
               {shortDescription}
             </p>
           )}
@@ -78,7 +93,7 @@ export const ArticleHero = ({
             className={twMerge('mt-2 text-xs text-gray600', isReversedLayout ? 'lg:hidden' : '')}
             {...inspectorProps({ fieldId: 'publishedDate' })}
           >
-            {/* <FormatDate date={publishedDate} /> */}
+            {publishedDate && <FormatDate date={publishedDate} />}
           </div>
         </div>
       </div>

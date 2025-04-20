@@ -12,7 +12,7 @@ export const ArticleTileGrid = ({ articles, className, ...props }: ArticleTileGr
   return articles && articles.length > 0 ? (
     <div
       className={twMerge(
-        'grid grid-cols-1 gap-y-4 gap-x-5 md:grid-cols-3 lg:gap-x-12 lg:gap-y-12',
+        'grid grid-cols-1 gap-6 sm:grid-cols-2 md:gap-8 lg:grid-cols-3',
         className,
       )}
       {...props}

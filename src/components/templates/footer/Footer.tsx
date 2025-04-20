@@ -11,9 +11,11 @@ export const Footer = () => {
 
   return (
     <footer className="border-t-color mt-10 border-t border-gray200">
-      <Container className="py-8 mx-16">
-        <BlogLogo className="w-24 h-8 mb-2" />
-        <div className="max-w-4xl">{t('footer.description')}</div>
+      <Container className="py-6 md:py-8">
+        <BlogLogo className="mb-2 h-8 w-24" />
+        <div className="max-w-full break-words text-left text-sm md:text-base">
+          {t('footer.description')}
+        </div>
       </Container>
     </footer>
   );

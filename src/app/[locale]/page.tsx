@@ -83,7 +83,7 @@ export default async function Page({ params: { locale } }: LandingPageProps) {
 
   return (
     <TranslationsProvider locale={locale} resources={resources}>
-      <Container>
+      <Container className="mx-auto mt-6 max-w-7xl px-4 sm:px-6 md:mt-8 md:px-8 lg:mt-10">
         <Link href={`/${page.featuredBlogPost.slug}`}>
           <ArticleHero article={page.featuredBlogPost} />
         </Link>
@@ -95,9 +95,14 @@ export default async function Page({ params: { locale } }: LandingPageProps) {
       {/*  <div className="my-5 bg-colorTextLightest p-5 text-colorBlueLightest">{page.greeting}</div>*/}
       {/*</Container>*/}
 
-      <Container className="my-8  md:mb-10 lg:mb-16 mx-16">
-        <h2 className="mb-4 md:mb-6">{t('landingPage.latestArticles')}</h2>
-        <ArticleTileGrid className="md:grid-cols-2 lg:grid-cols-3" articles={posts} />
+      <Container className="mx-auto my-8 max-w-7xl px-4 sm:px-6 md:my-10 md:px-8 lg:my-16">
+        <h2 className="mb-4 text-xl md:mb-6 md:text-2xl lg:text-3xl">
+          {t('landingPage.latestArticles')}
+        </h2>
+        <ArticleTileGrid
+          className="grid-cols-1 gap-6 sm:grid-cols-2 md:gap-8 lg:grid-cols-3"
+          articles={posts}
+        />
       </Container>
     </TranslationsProvider>
   );

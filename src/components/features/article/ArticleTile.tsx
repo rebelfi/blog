@@ -21,34 +21,43 @@ export const ArticleTile = ({ article, className }: ArticleTileProps) => {
   const inspectorProps = useContentfulInspectorMode({ entryId: article.sys.id });
 
   return (
-    <Link className="flex flex-col" href={`/${slug}`}>
+    <Link className="flex h-full flex-col" href={`/${slug}`}>
       <div
         className={twMerge(
-          'flex flex-1 flex-col overflow-hidden rounded-2xl border border-gray300 shadow-lg',
+          'flex h-full flex-1 flex-col overflow-hidden rounded-2xl border border-gray300 shadow-lg transition-transform duration-200 hover:-translate-y-1 hover:shadow-xl',
           className,
         )}
       >
         {featuredImage && (
-          <div {...inspectorProps({ fieldId: 'featuredImage' })}>
+          <div
+            className="h-48 overflow-hidden sm:h-40 md:h-48 lg:h-52"
+            {...inspectorProps({ fieldId: 'featuredImage' })}
+          >
             <CtfImage
-              nextImageProps={{ className: 'object-cover aspect-[16/10] w-full' }}
+              nextImageProps={{
+                className: 'object-cover w-full h-full',
+                sizes: '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw',
+              }}
               {...featuredImage}
             />
           </div>
         )}
-        <div className="flex flex-1 flex-col py-3 px-4 md:px-5 md:py-4 lg:px-7 lg:py-5">
+        <div className="flex flex-1 flex-col py-3 px-3 sm:py-4 sm:px-4 md:py-4 md:px-5">
           {title && (
-            <p className="h3 mb-2 text-gray800 md:mb-3" {...inspectorProps({ fieldId: 'title' })}>
+            <h3
+              className="line-clamp-2 mb-2 text-sm font-semibold sm:text-base md:text-lg"
+              {...inspectorProps({ fieldId: 'title' })}
+            >
               {title}
-            </p>
+            </h3>
           )}
 
           <div className="mt-auto flex items-center">
             <div
-              className={twMerge('ml-auto pl-2 text-xs text-gray600')}
+              className="ml-auto text-xs text-gray600"
               {...inspectorProps({ fieldId: 'publishedDate' })}
             >
-              <FormatDate date={publishedDate} />
+              {publishedDate && <FormatDate date={publishedDate} />}
             </div>
           </div>
         </div>
