@@ -4,7 +4,8 @@
     "featured": "featured"
   },
   "landingPage": {
-    "latestArticles": "Latest articles"
+    "latestArticles": "Latest articles",
+    "viewAllArticles": "View all articles"
   },
   "common": {
     "blogName": "DeFi Unlocked",
@@ -21,5 +22,8 @@
   "notFound": {
     "title": "Page not found",
     "description": "This page doesn't seem to exist. <0>Click here</0> to go back the homepage."
+  },
+  "blog": {
+    "allArticles": "All articles"
   }
 }

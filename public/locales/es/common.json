@@ -4,7 +4,8 @@
     "featured": "destacado"
   },
   "landingPage": {
-    "latestArticles": "Últimos artículos"
+    "latestArticles": "Últimos artículos",
+    "viewAllArticles": "Ver todos los artículos"
   },
   "common": {
     "blogName": "DeFi Desbloqueado",
@@ -21,5 +22,8 @@
   "notFound": {
     "title": "Página no encontrada",
     "description": "Parece que esta página no existe. <0>Haz clic aquí</0> para volver a la página principal."
+  },
+  "blog": {
+    "allArticles": "Todos los artículos"
   }
 }
