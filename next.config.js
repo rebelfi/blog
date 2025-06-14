@@ -63,6 +63,10 @@ module.exports = withPlugins(plugins, {
         protocol: 'https',
         hostname: 'images.eu.ctfassets.net',
       },
+      {
+        protocol: 'https',
+        hostname: 'rebelfi.nyc3.cdn.digitaloceanspaces.com',
+      },
     ],
   },
 

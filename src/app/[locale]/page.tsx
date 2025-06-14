@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation';
 import { ArticleHero } from '@src/components/features/article';
 import { PaginatedArticleGrid } from '@src/components/features/article/PaginatedArticleGrid';
 import { Container } from '@src/components/shared/container';
+import { CtaButton } from '@src/components/shared/cta-button';
 import TranslationsProvider from '@src/components/shared/i18n/TranslationProvider';
 import initTranslations from '@src/i18n';
 import { locales } from '@src/i18n/config';
@@ -94,23 +95,37 @@ export default async function Page({ params: { locale }, searchParams }: Landing
 
   return (
     <TranslationsProvider locale={locale} resources={resources}>
-      <Container className="mx-auto mt-6 max-w-7xl px-4 sm:px-6 md:mt-8 md:px-8 lg:mt-10">
-        <ArticleHero article={page.featuredBlogPost} />
-      </Container>
+      <Container className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+        {/* Featured Article */}
+        {page.featuredBlogPost && (
+          <div className="mb-12">
+            <div className="mb-6 flex items-center gap-3">
+              <div className="h-3 w-3 rounded-full bg-gradient-rebel"></div>
+              <h2 className="text-2xl font-bold text-gray-900">Featured Article</h2>
+            </div>
+            <ArticleHero article={page.featuredBlogPost} />
+          </div>
+        )}
 
-      {/* Tutorial: contentful-and-the-starter-template.md */}
-      {/* Uncomment the line below to make the Greeting field available to render */}
-      {/*<Container>*/}
-      {/*  <div className="my-5 bg-colorTextLightest p-5 text-colorBlueLightest">{page.greeting}</div>*/}
-      {/*</Container>*/}
+        {/* Latest Articles Section */}
+        <div className="mb-12">
+          <div className="mb-8">
+            <h2 className="mb-4 text-3xl font-bold text-gray-900">
+              Latest <span className="text-gradient">Articles</span>
+            </h2>
+            <p className="text-lg text-gray-600">
+              Stay updated with the latest developments in DeFi, blockchain technology, and RebelFi
+              platform updates.
+            </p>
+          </div>
 
-      <Container className="mx-auto my-8 max-w-7xl px-4 sm:px-6 md:my-10 md:px-8 lg:my-16">
-        <PaginatedArticleGrid
-          articles={posts}
-          total={total}
-          currentPage={currentPage}
-          className="grid-cols-1 gap-6 sm:grid-cols-2 md:gap-8 lg:grid-cols-3"
-        />
+          <PaginatedArticleGrid
+            articles={posts}
+            total={total}
+            currentPage={currentPage}
+            className="grid-cols-1 gap-8 sm:grid-cols-2 md:gap-10 lg:grid-cols-3"
+          />
+        </div>
       </Container>
     </TranslationsProvider>
   );

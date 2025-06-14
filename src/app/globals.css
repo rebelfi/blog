@@ -3,32 +3,77 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    font-family: var(--font-inter), system-ui, sans-serif;
+  }
+  
   body {
-    @apply text-sm text-gray800 md:text-sm bg-gray100;
+    @apply bg-white text-gray-900 antialiased;
   }
 
   .h1,
   h1 {
-    @apply text-xl leading-tighter font-semibold md:text-4xl;
+    @apply text-xl leading-tighter font-bold md:text-4xl text-white;
   }
 
   .h2,
   h2 {
-    @apply text-xl leading-tight font-semibold md:text-3xl;
+    @apply text-xl leading-tight font-bold md:text-3xl text-white;
   }
 
   .h3,
   h3 {
-    @apply text-base leading-relaxed font-semibold md:text-xl;
+    @apply text-base leading-relaxed font-bold md:text-xl text-white;
   }
 
   .h4,
   h4 {
-    @apply text-xs leading-normal font-semibold md:text-base;
+    @apply text-xs leading-normal font-bold md:text-base text-white;
   }
 
   p {
-    @apply text-gray600 tracking-snug font-normal leading-snug md:leading-normal;
+    @apply text-gray-300 tracking-snug font-normal leading-snug md:leading-normal;
+  }
+}
+
+@layer components {
+  /* Glass effect - more subtle */
+  .glass {
+    @apply bg-white/90 backdrop-blur-sm border border-gray-200;
+  }
+  
+  /* Card styles - professional */
+  .card {
+    @apply bg-white border border-gray-200 rounded-xl shadow-sm;
+  }
+  
+  .card-gradient {
+    @apply bg-gradient-to-br from-white to-gray-50 border border-gray-200 rounded-xl shadow-sm;
+  }
+  
+  /* Button styles */
+  .btn-primary {
+    @apply bg-gradient-to-r from-rebel-purple-600 to-rebel-purple-700 hover:from-rebel-purple-500 hover:to-rebel-purple-600 text-white font-semibold px-6 py-3 rounded-lg transition-all duration-200 hover:shadow-lg hover:shadow-rebel-purple-500/25 focus:outline-none focus:ring-2 focus:ring-rebel-purple-400 focus:ring-offset-2 focus:ring-offset-white;
+  }
+  
+  .btn-secondary {
+    @apply bg-gray-100 hover:bg-gray-200 text-gray-900 font-semibold px-6 py-3 rounded-lg border border-gray-300 hover:border-gray-400 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 focus:ring-offset-white;
+  }
+  
+  /* Text gradient for accents only */
+  .text-gradient {
+    @apply bg-gradient-to-r from-rebel-purple-600 to-rebel-purple-700 bg-clip-text text-transparent;
+  }
+  
+  /* Subtle background gradient */
+  .bg-gradient-rebel {
+    @apply bg-gradient-to-r from-rebel-purple-600 to-rebel-purple-700;
+  }
+}
+
+@layer utilities {
+  .text-shadow {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
 }
 
