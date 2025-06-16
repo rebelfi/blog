@@ -107,7 +107,7 @@ export default async function Page({ params: { locale, slug } }: BlogPageProps) 
 
       {/* Article Content */}
       <Container className="mx-auto mt-8 max-w-5xl px-4 sm:px-6 md:mt-12 md:px-8 lg:mt-16">
-        <div className="card p-8 md:p-12">
+        <div className="p-8 md:p-12">
           <ArticleContent article={blogPost} />
         </div>
       </Container>

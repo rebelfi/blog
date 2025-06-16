@@ -57,7 +57,7 @@ export const Header = () => {
             </button>
 
             <div className="rounded-lg border border-gray-200 bg-gray-100 p-1.5">
-              <LanguageSelector />
+              {/* <LanguageSelector /> */}
             </div>
           </div>
         </Container>
