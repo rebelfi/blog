@@ -69,9 +69,6 @@ export const Footer = () => {
                 >
                   Launch Platform
                 </Link>
-                <Link href="/blog" className="btn-secondary">
-                  All Posts
-                </Link>
               </div>
             </div>
 

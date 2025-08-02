@@ -1,4 +1,3 @@
-import { headers } from 'next/headers';
 import Link from 'next/link';
 import { Trans } from 'react-i18next/TransWithoutContext';
 
@@ -7,8 +6,7 @@ import initTranslations from '@src/i18n';
 import { defaultLocale } from '@src/i18n/config';
 
 export default async function NotFound() {
-  const headersList = headers();
-  const locale = headersList.get('x-next-i18n-router-locale') || defaultLocale;
+  const locale = defaultLocale;
   const { t } = await initTranslations({ locale });
 
   return (

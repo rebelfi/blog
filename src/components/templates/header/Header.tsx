@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 import Image from 'next/image';
 
-import { LanguageSelector } from '@src/components/features/language-selector';
 import { Container } from '@src/components/shared/container';
 
 export const Header = () => {
@@ -56,9 +55,7 @@ export const Header = () => {
               </svg>
             </button>
 
-            <div className="rounded-lg border border-gray-200 bg-gray-100 p-1.5">
-              {/* <LanguageSelector /> */}
-            </div>
+            <div className="rounded-lg border border-gray-200 bg-gray-100 p-1.5"></div>
           </div>
         </Container>
       </nav>

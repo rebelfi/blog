@@ -8,38 +8,27 @@ import { Container } from '@src/components/shared/container';
 import { CtaButton } from '@src/components/shared/cta-button';
 import TranslationsProvider from '@src/components/shared/i18n/TranslationProvider';
 import initTranslations from '@src/i18n';
-import { locales } from '@src/i18n/config';
+import { defaultLocale } from '@src/i18n/config';
 import { PageBlogPostOrder } from '@src/lib/__generated/sdk';
 import { client, previewClient } from '@src/lib/client';
 
 const POSTS_PER_PAGE = 6;
 
 interface LandingPageProps {
-  params: {
-    locale: string;
-  };
   searchParams: {
     [key: string]: string | string[] | undefined;
   };
 }
 
-export async function generateMetadata({ params }: LandingPageProps): Promise<Metadata> {
+export async function generateMetadata(): Promise<Metadata> {
   const { isEnabled: preview } = draftMode();
   const gqlClient = preview ? previewClient : client;
-  const landingPageData = await gqlClient.pageLanding({ locale: params.locale, preview });
+  const landingPageData = await gqlClient.pageLanding({ locale: defaultLocale, preview });
   const page = landingPageData.pageLandingCollection?.items[0];
-  const languages = locales.length > 1 ? {} : undefined;
-
-  if (languages) {
-    for (const locale of locales) {
-      languages[locale] = `/${locale}`;
-    }
-  }
 
   let metadata: Metadata = {
     alternates: {
       canonical: '/',
-      languages,
     },
     twitter: {
       card: 'summary_large_image',
@@ -60,8 +49,9 @@ export async function generateMetadata({ params }: LandingPageProps): Promise<Me
   return metadata;
 }
 
-export default async function Page({ params: { locale }, searchParams }: LandingPageProps) {
+export default async function Page({ searchParams }: LandingPageProps) {
   const { isEnabled: preview } = draftMode();
+  const locale = defaultLocale;
   const { t, resources } = await initTranslations({ locale });
   const gqlClient = preview ? previewClient : client;
 
