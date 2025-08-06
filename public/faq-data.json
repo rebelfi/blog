@@ -1,1 +1,74 @@
-{}
+{
+  "the-great-stablecoin-regression-why-weve-gone-backwards": {
+    "questions": [
+      {
+        "question": "Why has the stablecoin infrastructure regressed to a level similar to Bitcoin's functionality in 2009?",
+        "answer": "According to the blog post, this regression is due to stablecoin providers ignoring smart contracts, which are a key feature that allows for programmable money and more advanced functionality."
+      },
+      {
+        "question": "What is meant by 'programmable money', and how does it change everything?",
+        "answer": "Programmable money refers to the ability of money to be programmed with specific rules or behaviors, allowing for more complex and automated financial transactions. This changes everything because it enables new use cases and applications that were not possible before."
+      },
+      {
+        "question": "Are all stablecoins affected by this regression, or just some?",
+        "answer": "The blog post does not specify which stablecoin providers are ignoring smart contracts, but implies that the issue is widespread among stablecoin infrastructure."
+      },
+      {
+        "question": "What are the implications of stablecoin providers ignoring smart contracts for users and the wider cryptocurrency ecosystem?",
+        "answer": "By ignoring smart contracts, stablecoin providers are limiting the potential of their products and preventing them from reaching their full potential. This could have significant implications for users who rely on stablecoins for financial transactions or other applications."
+      },
+      {
+        "question": "Is it possible to create a new generation of stablecoins that incorporate advanced features like smart contracts?",
+        "answer": "Yes, the blog post suggests that programmable money and smart contracts are key to creating a new generation of stablecoins with more advanced functionality. This could potentially lead to significant improvements in the stability and usability of stablecoins."
+      }
+    ]
+  },
+  "why-payment-platforms-must-evolve-beyond-just-moving-money-the-rise-of": {
+    "questions": [
+      {
+        "question": "What is programmable payments and how does it differ from traditional payment platforms?",
+        "answer": "Programmable payments refer to a type of payment system that allows for customizable and automated payment flows, enabling businesses to create personalized payment experiences. Unlike traditional payment platforms, which primarily focus on moving money between parties, programmable payments integrate payment capabilities with other business functions, such as inventory management or customer relationship management."
+      },
+      {
+        "question": "Can I still use my existing payment infrastructure if I switch to a programmable payments platform?",
+        "answer": "Yes, many programmable payments platforms offer integration with existing payment systems and infrastructure, minimizing the need for costly overhauls. This makes it easier for businesses to adopt programmable payments without disrupting their operations."
+      },
+      {
+        "question": "How do programmable payments improve customer experience?",
+        "answer": "Programmable payments enable businesses to create seamless, intuitive payment experiences that are tailored to individual customers' needs. For example, a merchant can automatically adjust payment terms based on a customer's purchase history or loyalty status."
+      },
+      {
+        "question": "What kind of business benefits can I expect from adopting programmable payments?",
+        "answer": "Programmable payments can lead to increased revenue through improved payment conversion rates and reduced cart abandonment. Additionally, businesses can gain valuable insights into their customers' payment behavior, enabling data-driven decisions to optimize their operations."
+      },
+      {
+        "question": "Are programmable payments secure? Can I trust them with sensitive customer information?",
+        "answer": "Programmable payments platforms prioritize security and often integrate industry-standard security protocols, such as encryption and tokenization. By partnering with a reputable programmable payments provider, businesses can ensure the secure handling of sensitive customer data."
+      }
+    ]
+  },
+  "howrebelfis-business-banking-solution-minimizes-risk-while-maximizing-yield": {
+    "questions": [
+      {
+        "question": "How does RebelFi's Business Banking Solution help minimize risk for businesses?",
+        "answer": "RebelFi's solution helps minimize risk by providing a range of security features, such as robust login protocols and advanced encryption methods, to protect business finances from cyber threats and unauthorized access."
+      },
+      {
+        "question": "What kind of yields can businesses expect with RebelFi's Business Banking Solution?",
+        "answer": "Businesses can expect to maximize their yield through high-interest rates on deposits, competitive exchange rates for international transactions, and optimized cash flow management tools that help them earn more interest on their money."
+      },
+      {
+        "question": "Is RebelFi's Business Banking Solution suitable for all types of businesses?",
+        "answer": "RebelFi's solution is designed to cater to various business needs, from small startups to established enterprises, and offers customized plans to suit different company sizes and financial requirements."
+      },
+      {
+        "question": "How does RebelFi's Business Banking Solution compare to traditional banking options?",
+        "answer": "RebelFi's solution differs from traditional banking in its innovative approach to business financing, offering more flexible terms, higher interest rates, and advanced digital tools that make it easier for businesses to manage their finances."
+      },
+      {
+        "question": "What kind of support can businesses expect from RebelFi's Business Banking Solution?",
+        "answer": "RebelFi provides dedicated customer support to help businesses get the most out of its solution, including phone, email, and online chat support, as well as educational resources and webinars to enhance their financial literacy."
+      }
+    ]
+  }
+}

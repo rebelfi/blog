@@ -1,6 +1,10 @@
 import { client } from '../src/lib/client';
 import fs from 'fs';
 import path from 'path';
+import dotenv from 'dotenv';
+dotenv.config();
+
+const OLLAMA_API_URL = process.env.OLLAMA_API_URL;
 
 interface BlogPost {
   slug: string;
@@ -18,7 +22,6 @@ interface FAQData {
   };
 }
 
-// AI-powered FAQ generation using Ollama
 async function generateFAQForPost(
   post: BlogPost,
 ): Promise<Array<{ question: string; answer: string }> | null> {
@@ -50,8 +53,7 @@ Return ONLY a valid JSON array with this exact structure:
 Do not include any other text, just the JSON array.
 `;
 
-    // Call Ollama API
-    const response = await fetch('http://127.0.0.1:11434/api/generate', {
+    const response = await fetch(`${process.env.OLLAMA_API_URL}/api/generate`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -105,9 +107,25 @@ Do not include any other text, just the JSON array.
 
 async function generateFAQData() {
   try {
+    if (!OLLAMA_API_URL) {
+      throw new Error('OLLAMA_API_URL is not set');
+    }
+
     console.log('Fetching all blog posts from Contentful...');
 
-    // Fetch all blog posts
+    const outputPath = path.join(process.cwd(), 'public', 'faq-data.json');
+    let existingFaqData: FAQData = {};
+
+    if (fs.existsSync(outputPath)) {
+      try {
+        const existingData = fs.readFileSync(outputPath, 'utf8');
+        existingFaqData = JSON.parse(existingData);
+        console.log(`📁 Loaded existing FAQ data for ${Object.keys(existingFaqData).length} posts`);
+      } catch (error) {
+        console.log('⚠️ Could not load existing FAQ data, starting fresh');
+      }
+    }
+
     const { pageBlogPostCollection } = await client.pageBlogPostCollection({
       locale: 'en-US',
       limit: 100,
@@ -117,13 +135,20 @@ async function generateFAQData() {
       throw new Error('No blog posts found');
     }
 
-    const faqData: FAQData = {};
+    const faqData: FAQData = { ...existingFaqData };
+    let processedCount = 0;
+    let skippedCount = 0;
 
     console.log(`Found ${pageBlogPostCollection.items.length} blog posts`);
 
-    // Generate FAQ for each post
     for (const post of pageBlogPostCollection.items) {
       if (!post?.slug) continue;
+
+      if (existingFaqData[post.slug]) {
+        console.log(`⏭️ Skipping ${post.title} (${post.slug}) - FAQ already exists`);
+        skippedCount++;
+        continue;
+      }
 
       console.log(`Processing: ${post.title} (${post.slug})`);
 
@@ -138,23 +163,21 @@ async function generateFAQData() {
         faqData[post.slug] = {
           questions: faqItems,
         };
+        processedCount++;
       }
     }
 
-    // Ensure the public directory exists
     const publicDir = path.join(process.cwd(), 'public');
     if (!fs.existsSync(publicDir)) {
       fs.mkdirSync(publicDir, { recursive: true });
     }
 
-    // Save to JSON file
-    const outputPath = path.join(publicDir, 'faq-data.json');
     fs.writeFileSync(outputPath, JSON.stringify(faqData, null, 2));
 
     console.log(`✅ FAQ data saved to: ${outputPath}`);
     console.log(`✅ Generated FAQ for ${Object.keys(faqData).length} posts`);
+    console.log(`📊 Summary: ${processedCount} new posts processed, ${skippedCount} posts skipped`);
 
-    // Show sample of generated data
     const sampleSlug = Object.keys(faqData)[0];
     if (sampleSlug) {
       console.log('\n📋 Sample FAQ data:');
@@ -166,5 +189,4 @@ async function generateFAQData() {
   }
 }
 
-// Run the script
 generateFAQData();
