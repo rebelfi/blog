@@ -1,4 +1,6 @@
 import { CodegenConfig } from '@graphql-codegen/cli';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const endpointOverride = process.env.CONTENTFUL_GRAPHQL_ENDPOINT;
 const productionEndpoint = 'https://graphql.contentful.com/content/v1/spaces';

@@ -6,12 +6,14 @@ import {
   ArticleContent,
   ArticleHero,
   ArticleSchema,
+  FAQSchema,
   ArticleTileGrid,
 } from '@src/components/features/article';
 import { Container } from '@src/components/shared/container';
 import { NewsletterSignup } from '@src/components/shared/newsletter-signup';
 import initTranslations from '@src/i18n';
 import { client, previewClient } from '@src/lib/client';
+import { getFAQData } from '@src/lib/faq-utils';
 import { PageBlogPostOrder, SeoFieldsFragment } from '@src/lib/__generated/sdk';
 
 export async function generateStaticParams(): Promise<BlogPageProps['params'][]> {
@@ -77,6 +79,8 @@ export default async function Page({ params: { slug } }: BlogPageProps) {
   const landingPage = pageLandingCollection?.items[0];
   const blogPost = pageBlogPostCollection?.items[0];
 
+  const faqData = await getFAQData(slug);
+
   // Get latest 3 articles instead of related articles
   const { pageBlogPostCollection: latestPostsData } = await gqlClient.pageBlogPostCollection({
     locale,
@@ -101,6 +105,9 @@ export default async function Page({ params: { slug } }: BlogPageProps) {
     <>
       {/* Article Schema JSON-LD */}
       <ArticleSchema article={blogPost} />
+
+      {/* FAQ Schema JSON-LD */}
+      <FAQSchema article={blogPost} faqData={faqData} />
 
       <div className="relative">
         {/* Article Hero */}
