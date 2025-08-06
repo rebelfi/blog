@@ -1,8 +1,6 @@
 import { draftMode } from 'next/headers';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
-import fs from 'fs';
-import path from 'path';
 
 import {
   ArticleContent,
@@ -15,6 +13,7 @@ import { Container } from '@src/components/shared/container';
 import { NewsletterSignup } from '@src/components/shared/newsletter-signup';
 import initTranslations from '@src/i18n';
 import { client, previewClient } from '@src/lib/client';
+import { getFAQData } from '@src/lib/faq-utils';
 import { PageBlogPostOrder, SeoFieldsFragment } from '@src/lib/__generated/sdk';
 
 export async function generateStaticParams(): Promise<BlogPageProps['params'][]> {
@@ -41,25 +40,6 @@ interface BlogPageProps {
   params: {
     slug: string;
   };
-}
-
-async function getFAQData(slug: string) {
-  try {
-    const faqDataPath = path.join(process.cwd(), 'public', 'faq-data.json');
-
-    if (!fs.existsSync(faqDataPath)) {
-      console.log('FAQ data file not found, skipping FAQ schema');
-      return null;
-    }
-
-    const faqDataContent = fs.readFileSync(faqDataPath, 'utf-8');
-    const faqData = JSON.parse(faqDataContent);
-
-    return faqData[slug]?.questions || null;
-  } catch (error) {
-    console.error('Error loading FAQ data:', error);
-    return null;
-  }
 }
 
 export async function generateMetadata({ params: { slug } }: BlogPageProps): Promise<Metadata> {
@@ -90,7 +70,6 @@ export async function generateMetadata({ params: { slug } }: BlogPageProps): Pro
 }
 
 export default async function Page({ params: { slug } }: BlogPageProps) {
-  console.log('I AM HEREEEEEE');
   const { isEnabled: preview } = draftMode();
   const gqlClient = preview ? previewClient : client;
   const locale = 'en-US'; // Use default locale
@@ -101,7 +80,6 @@ export default async function Page({ params: { slug } }: BlogPageProps) {
   const blogPost = pageBlogPostCollection?.items[0];
 
   const faqData = await getFAQData(slug);
-  console.log('faqData', faqData);
 
   // Get latest 3 articles instead of related articles
   const { pageBlogPostCollection: latestPostsData } = await gqlClient.pageBlogPostCollection({
