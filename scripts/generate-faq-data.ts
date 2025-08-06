@@ -97,7 +97,7 @@ Do not include any other text, just the JSON array.
       }
     }
 
-    console.log('⚠️ Failed to parse AI response, using fallback data');
+    console.log(`❌ Failed to generate FAQ for ${post.slug}`);
     return null;
   } catch (error) {
     console.error(`Error generating FAQ for ${post.slug}:`, error);
