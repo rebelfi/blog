@@ -15,7 +15,8 @@
     "type-check": "tsc --noEmit",
     "graphql-codegen:generate": "graphql-codegen -r dotenv/config --config codegen.ts",
     "graphql-codegen:watch": "graphql-codegen --watch -r dotenv/config --config codegen.ts",
-    "setup": "./bin/setup.sh"
+    "setup": "./bin/setup.sh",
+    "generate-faq": "tsx scripts/generate-faq-data.ts"
   },
   "lint-staged": {
     "src/**/*.{js,jsx,ts,tsx}": [
@@ -70,6 +71,7 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.22.0",
     "eslint-plugin-react-hooks": "^4.2.0",
+    "fs": "^0.0.1-security",
     "husky": "^8.0.2",
     "i18next": "^23.14.0",
     "i18next-http-backend": "^1.4.4",
@@ -79,6 +81,7 @@
     "prettier-plugin-tailwindcss": "^0.2.1",
     "tailwind-merge": "^1.8.0",
     "tailwindcss": "^3.2.4",
+    "tsx": "^4.20.3",
     "typescript": "5.5.4"
   }
 }

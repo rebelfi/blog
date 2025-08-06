@@ -1,8 +1,8 @@
+import React from 'react';
 import { dir } from 'i18next';
 import type { Metadata, Viewport } from 'next';
 import { Roboto } from 'next/font/google';
 import { draftMode } from 'next/headers';
-
 import { ContentfulPreviewProvider } from '@src/components/features/contentful';
 import TranslationsProvider from '@src/components/shared/i18n/TranslationProvider';
 import { Footer } from '@src/components/templates/footer';
@@ -54,8 +54,7 @@ export default async function RootLayout({ children }: LayoutProps) {
             locale={locale}
             enableInspectorMode={preview}
             enableLiveUpdates={preview}
-            targetOrigin={allowedOriginList}
-          >
+            targetOrigin={allowedOriginList}>
             <main className={`${roboto.variable} font-sans`}>
               <Header />
               {children}

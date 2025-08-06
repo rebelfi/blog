@@ -1,11 +1,14 @@
 import { draftMode } from 'next/headers';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
+import fs from 'fs';
+import path from 'path';
 
 import {
   ArticleContent,
   ArticleHero,
   ArticleSchema,
+  FAQSchema,
   ArticleTileGrid,
 } from '@src/components/features/article';
 import { Container } from '@src/components/shared/container';
@@ -40,6 +43,25 @@ interface BlogPageProps {
   };
 }
 
+async function getFAQData(slug: string) {
+  try {
+    const faqDataPath = path.join(process.cwd(), 'public', 'faq-data.json');
+
+    if (!fs.existsSync(faqDataPath)) {
+      console.log('FAQ data file not found, skipping FAQ schema');
+      return null;
+    }
+
+    const faqDataContent = fs.readFileSync(faqDataPath, 'utf-8');
+    const faqData = JSON.parse(faqDataContent);
+
+    return faqData[slug]?.questions || null;
+  } catch (error) {
+    console.error('Error loading FAQ data:', error);
+    return null;
+  }
+}
+
 export async function generateMetadata({ params: { slug } }: BlogPageProps): Promise<Metadata> {
   const { isEnabled: preview } = draftMode();
   const gqlClient = preview ? previewClient : client;
@@ -68,6 +90,7 @@ export async function generateMetadata({ params: { slug } }: BlogPageProps): Pro
 }
 
 export default async function Page({ params: { slug } }: BlogPageProps) {
+  console.log('I AM HEREEEEEE');
   const { isEnabled: preview } = draftMode();
   const gqlClient = preview ? previewClient : client;
   const locale = 'en-US'; // Use default locale
@@ -76,6 +99,9 @@ export default async function Page({ params: { slug } }: BlogPageProps) {
   const { pageLandingCollection } = await gqlClient.pageLanding({ locale, preview });
   const landingPage = pageLandingCollection?.items[0];
   const blogPost = pageBlogPostCollection?.items[0];
+
+  const faqData = await getFAQData(slug);
+  console.log('faqData', faqData);
 
   // Get latest 3 articles instead of related articles
   const { pageBlogPostCollection: latestPostsData } = await gqlClient.pageBlogPostCollection({
@@ -101,6 +127,9 @@ export default async function Page({ params: { slug } }: BlogPageProps) {
     <>
       {/* Article Schema JSON-LD */}
       <ArticleSchema article={blogPost} />
+
+      {/* FAQ Schema JSON-LD */}
+      <FAQSchema article={blogPost} faqData={faqData} />
 
       <div className="relative">
         {/* Article Hero */}

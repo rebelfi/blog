@@ -14,6 +14,7 @@ interface ArticleContentProps {
 export const ArticleContent = ({ article }: ArticleContentProps) => {
   const { content } = useContentfulLiveUpdates(article);
   const inspectorProps = useContentfulInspectorMode({ entryId: article.sys.id });
+  console.log('asdasddsadas');
 
   return (
     <div {...inspectorProps({ fieldId: 'content' })}>
