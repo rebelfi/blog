@@ -2,9 +2,14 @@ import { client } from '../src/lib/client';
 import fs from 'fs';
 import path from 'path';
 import dotenv from 'dotenv';
+import Anthropic from '@anthropic-ai/sdk';
 dotenv.config();
 
-const OLLAMA_API_URL = process.env.OLLAMA_API_URL;
+const CLAUDE_API_KEY = process.env.CLAUDE_API_KEY;
+
+const anthropic = new Anthropic({
+  apiKey: CLAUDE_API_KEY,
+});
 
 interface BlogPost {
   slug: string;
@@ -28,19 +33,23 @@ async function generateFAQForPost(
   try {
     console.log(`Generating AI FAQ for: ${post.title} (${post.slug})`);
 
-    const prompt = `
-Based on this blog post, generate 4-5 relevant FAQ questions and answers that readers might have about this topic.
+    const prompt = `Based on this blog post about blockchain and stablecoin infrastructure, generate 4-5 relevant FAQ questions and answers that readers might have.
 
 Blog Post Title: ${post.title}
-Blog Post Description: ${post.shortDescription}
+Blog Post Content: ${post.content}
+
+Context: This is for RebelFi, a company building programmable stablecoin infrastructure that enables yield generation, smart escrow, and automated financial workflows for fintechs and financial institutions.
 
 Generate questions that are:
-1. Relevant to the blog post topic
-2. Something readers would actually want to know
-3. Clear and specific
-4. Cover different aspects of the topic
+1. Directly relevant to the blog post topic
+2. Address practical implementation concerns (technical, regulatory, business)
+3. Connect to broader stablecoin/DeFi adoption challenges when relevant
+4. Include at least one question about practical applications or business benefits
+5. Are specific enough to be genuinely helpful to someone evaluating this technology
 
-Provide concise but informative answers.
+Focus on questions that decision-makers at fintechs, payment companies, or financial institutions would actually ask when considering programmable stablecoin infrastructure.
+
+Provide authoritative, concise answers that demonstrate subject matter expertise while being accessible to non-technical readers.
 
 Return ONLY a valid JSON array with this exact structure:
 [
@@ -50,50 +59,41 @@ Return ONLY a valid JSON array with this exact structure:
   }
 ]
 
-Do not include any other text, just the JSON array.
-`;
+Do not include any other text, just the JSON array.`;
 
-    const response = await fetch(`${process.env.OLLAMA_API_URL}/api/generate`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        model: 'llama3.1:8b',
-        prompt: prompt,
-        stream: false,
-        options: {
-          temperature: 0.7,
-          top_p: 0.9,
-        },
-      }),
+    const message = await anthropic.messages.create({
+      model: 'claude-opus-4-20250514',
+      max_tokens: 1000,
+      temperature: 0.7,
+      messages: [{
+        role: 'user',
+        content: prompt
+      }]
     });
 
-    console.log('Response', response);
+    console.log('Claude API response received');
 
-    if (!response.ok) {
-      throw new Error(`Ollama API error: ${response.statusText}`);
-    }
+    if (message.content && message.content.length > 0 && message.content[0].type === 'text') {
+      const aiResponse = message.content[0].text;
+      console.log('AI Response:', aiResponse.substring(0, 200) + '...');
 
-    const data = await response.json();
-    console.log('data', data);
-    const aiResponse = data.response;
+      // Try to extract JSON from the response
+      const jsonMatch = aiResponse.match(/\[[\s\S]*\]/);
+      if (jsonMatch) {
+        const faqData = JSON.parse(jsonMatch[0]);
 
-    const jsonMatch = aiResponse.match(/\[[\s\S]*\]/);
-    if (jsonMatch) {
-      const faqData = JSON.parse(jsonMatch[0]);
-
-      if (
-        Array.isArray(faqData) &&
-        faqData.every(
-          item =>
-            typeof item === 'object' &&
-            typeof item.question === 'string' &&
-            typeof item.answer === 'string',
-        )
-      ) {
-        console.log(`✅ Generated ${faqData.length} FAQ items for ${post.slug}`);
-        return faqData;
+        if (
+          Array.isArray(faqData) &&
+          faqData.every(
+            item =>
+              typeof item === 'object' &&
+              typeof item.question === 'string' &&
+              typeof item.answer === 'string',
+          )
+        ) {
+          console.log(`✅ Generated ${faqData.length} FAQ items for ${post.slug}`);
+          return faqData;
+        }
       }
     }
 
@@ -107,8 +107,8 @@ Do not include any other text, just the JSON array.
 
 async function generateFAQData() {
   try {
-    if (!OLLAMA_API_URL) {
-      throw new Error('OLLAMA_API_URL is not set');
+    if (!CLAUDE_API_KEY) {
+      throw new Error('CLAUDE_API_KEY is not set in environment variables');
     }
 
     console.log('Fetching all blog posts from Contentful...');

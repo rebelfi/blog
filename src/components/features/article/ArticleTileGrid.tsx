@@ -1,4 +1,4 @@
-import { HTMLProps } from 'react';
+import React, { HTMLProps } from 'react';
 import { twMerge } from 'tailwind-merge';
 
 import { ArticleTile } from '@src/components/features/article/ArticleTile';
@@ -18,7 +18,9 @@ export const ArticleTileGrid = ({ articles, className, ...props }: ArticleTileGr
       {...props}
     >
       {articles.map((article, index) => {
-        return article ? <ArticleTile key={index} article={article} /> : null;
+        if (!article) return null;
+        const key = article.sys.id || index;
+        return React.createElement(ArticleTile, { key, article });
       })}
     </div>
   ) : null;

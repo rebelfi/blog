@@ -28,6 +28,7 @@
   },
   "license": "MIT",
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.60.0",
     "@contentful/f36-icons": "^4.29.0",
     "@contentful/f36-tokens": "^4.0.5",
     "@contentful/live-preview": "^4.5.14",

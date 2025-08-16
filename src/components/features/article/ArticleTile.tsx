@@ -12,7 +12,7 @@ import { FormatDate } from '@src/components/shared/format-date';
 import { PageBlogPostFieldsFragment } from '@src/lib/__generated/sdk';
 import { useTranslation } from 'react-i18next';
 
-interface ArticleTileProps {
+export interface ArticleTileProps {
   article: PageBlogPostFieldsFragment;
   size?: 'small' | 'medium' | 'large';
 }
@@ -46,14 +46,14 @@ export const ArticleTile = ({ article, size = 'medium' }: ArticleTileProps) => {
           )}
 
           {/* Category Badge */}
-          <div className="absolute top-4 left-4 z-20">
+          <div className="absolute left-4 top-4 z-20">
             <div className="rounded-full border border-gray-200 bg-white/90 px-3 py-1 backdrop-blur-sm">
               <span className="text-xs font-medium text-gray-900">DeFi</span>
             </div>
           </div>
 
           {/* Reading Time */}
-          <div className="absolute top-4 right-4 z-20">
+          <div className="absolute right-4 top-4 z-20">
             <div className="rounded-full border border-gray-200 bg-white/90 px-3 py-1 backdrop-blur-sm">
               <div className="flex items-center gap-1 text-xs text-gray-900">
                 <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -94,7 +94,7 @@ export const ArticleTile = ({ article, size = 'medium' }: ArticleTileProps) => {
 
             {/* Title */}
             <h3
-              className="group-hover:text-gradient line-clamp-2 mb-3 text-xl font-bold leading-tight text-gray-900 transition-all duration-300"
+              className="group-hover:text-gradient mb-3 line-clamp-2 text-xl font-bold leading-tight text-gray-900 transition-all duration-300"
               {...inspectorProps({ fieldId: 'title' })}
             >
               {title}
@@ -103,7 +103,7 @@ export const ArticleTile = ({ article, size = 'medium' }: ArticleTileProps) => {
             {/* Description */}
             {shortDescription && (
               <p
-                className="line-clamp-3 mb-4 flex-1 leading-relaxed text-gray-600"
+                className="mb-4 line-clamp-3 flex-1 leading-relaxed text-gray-600"
                 {...inspectorProps({ fieldId: 'shortDescription' })}
               >
                 {shortDescription}

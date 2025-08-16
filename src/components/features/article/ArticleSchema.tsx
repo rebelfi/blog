@@ -42,12 +42,10 @@ export const ArticleSchema = ({ article }: ArticleSchemaProps) => {
     image: getImageUrl() ? [getImageUrl()] : undefined,
     datePublished: article.publishedDate,
     dateModified: article.publishedDate, // Using publishedDate as we don't have lastModified
-    author: article.author?.name
-      ? {
-          '@type': 'Person',
-          name: article.author.name,
-        }
-      : undefined,
+    author: {
+      '@type': 'Organization',
+      name: 'RebelFi',
+    },
     publisher: {
       '@type': 'Organization',
       name: 'RebelFi',
