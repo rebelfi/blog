@@ -33,7 +33,7 @@ async function generateFAQForPost(
   try {
     console.log(`Generating AI FAQ for: ${post.title} (${post.slug})`);
 
-    const prompt = `Based on this blog post about blockchain and stablecoin infrastructure, generate 4-5 relevant FAQ questions and answers that readers might have.
+    const prompt = `Based on this blog post about blockchain and stablecoin infrastructure, generate 10-15 relevant FAQ questions and answers that readers might have.
 
 Blog Post Title: ${post.title}
 Blog Post Content: ${post.content}
@@ -61,9 +61,10 @@ Return ONLY a valid JSON array with this exact structure:
 
 Do not include any other text, just the JSON array.`;
 
+    console.log('🤖 Making Claude API request...');
     const message = await anthropic.messages.create({
-      model: 'claude-opus-4-20250514',
-      max_tokens: 1000,
+      model: 'claude-opus-4-20250514', // Updated to valid model name
+      max_tokens: 2000, // Increased for longer FAQ responses
       temperature: 0.7,
       messages: [{
         role: 'user',
@@ -71,33 +72,79 @@ Do not include any other text, just the JSON array.`;
       }]
     });
 
-    console.log('Claude API response received');
+    console.log('✅ Claude API response received');
+    console.log('📊 Response structure:', {
+      contentLength: message.content?.length,
+      contentType: message.content?.[0]?.type,
+      hasContent: !!message.content?.[0]
+    });
 
     if (message.content && message.content.length > 0 && message.content[0].type === 'text') {
       const aiResponse = message.content[0].text;
-      console.log('AI Response:', aiResponse.substring(0, 200) + '...');
+      console.log('📝 Full AI Response length:', aiResponse.length);
+      console.log('📝 AI Response preview:', aiResponse.substring(0, 300) + '...');
+      console.log('📝 AI Response ending:', '...' + aiResponse.substring(aiResponse.length - 200));
 
       // Try to extract JSON from the response
+      console.log('🔍 Attempting to extract JSON...');
       const jsonMatch = aiResponse.match(/\[[\s\S]*\]/);
+      
       if (jsonMatch) {
-        const faqData = JSON.parse(jsonMatch[0]);
-
-        if (
-          Array.isArray(faqData) &&
-          faqData.every(
-            item =>
-              typeof item === 'object' &&
-              typeof item.question === 'string' &&
-              typeof item.answer === 'string',
-          )
-        ) {
-          console.log(`✅ Generated ${faqData.length} FAQ items for ${post.slug}`);
-          return faqData;
+        console.log('✅ JSON pattern found in response');
+        console.log('📄 Extracted JSON preview:', jsonMatch[0].substring(0, 300) + '...');
+        
+        try {
+          const faqData = JSON.parse(jsonMatch[0]);
+          console.log('✅ JSON parsed successfully');
+          console.log('📊 Parsed data type:', typeof faqData);
+          console.log('📊 Is array:', Array.isArray(faqData));
+          console.log('📊 Array length:', Array.isArray(faqData) ? faqData.length : 'N/A');
+          
+          if (Array.isArray(faqData)) {
+            console.log('🔍 Validating array items...');
+            const validItems = faqData.filter((item, index) => {
+              const isValid = typeof item === 'object' &&
+                             typeof item.question === 'string' &&
+                             typeof item.answer === 'string';
+              
+              if (!isValid) {
+                console.log(`❌ Invalid item at index ${index}:`, {
+                  type: typeof item,
+                  hasQuestion: typeof item?.question === 'string',
+                  hasAnswer: typeof item?.answer === 'string',
+                  item: item
+                });
+              }
+              return isValid;
+            });
+            
+            console.log(`📊 Valid items: ${validItems.length}/${faqData.length}`);
+            
+            if (validItems.length === faqData.length && faqData.length > 0) {
+              console.log(`✅ Generated ${faqData.length} FAQ items for ${post.slug}`);
+              return faqData;
+            } else {
+              console.log(`❌ Validation failed: ${validItems.length} valid out of ${faqData.length} total items`);
+            }
+          } else {
+            console.log('❌ Parsed data is not an array');
+          }
+        } catch (parseError) {
+          console.log('❌ JSON parsing failed:', parseError);
+          console.log('📄 Raw JSON that failed to parse:', jsonMatch[0]);
         }
+      } else {
+        console.log('❌ No JSON array pattern found in response');
+        console.log('🔍 Looking for any bracket patterns...');
+        const anyBrackets = aiResponse.match(/[\[\]]/g);
+        console.log('🔍 Found brackets:', anyBrackets ? anyBrackets.join('') : 'none');
       }
+    } else {
+      console.log('❌ No text content in API response');
+      console.log('📊 Message content:', message.content);
     }
 
-    console.log(`❌ Failed to generate FAQ for ${post.slug}`);
+    console.log(`❌ Failed to generate FAQ for ${post.slug} - see debug info above`);
     return null;
   } catch (error) {
     console.error(`Error generating FAQ for ${post.slug}:`, error);
@@ -142,7 +189,10 @@ async function generateFAQData() {
     console.log(`Found ${pageBlogPostCollection.items.length} blog posts`);
 
     for (const post of pageBlogPostCollection.items) {
-      if (!post?.slug) continue;
+      if (!post?.slug) {
+        console.log('⚠️ Skipping post without slug:', post?.title || 'untitled');
+        continue;
+      }
 
       if (existingFaqData[post.slug]) {
         console.log(`⏭️ Skipping ${post.title} (${post.slug}) - FAQ already exists`);
@@ -150,7 +200,8 @@ async function generateFAQData() {
         continue;
       }
 
-      console.log(`Processing: ${post.title} (${post.slug})`);
+      console.log(`\n🔄 Processing: ${post.title} (${post.slug})`);
+      console.log(`📄 Post content preview:`, typeof post.content, post.content ? String(post.content).substring(0, 100) + '...' : 'no content');
 
       const faqItems = await generateFAQForPost({
         slug: post.slug,
@@ -164,7 +215,14 @@ async function generateFAQData() {
           questions: faqItems,
         };
         processedCount++;
+        console.log(`✅ Successfully processed ${post.slug}`);
+      } else {
+        console.log(`❌ Failed to process ${post.slug}`);
       }
+      
+      // Add a small delay to avoid rate limiting
+      console.log('⏳ Waiting 1 second before next request...');
+      await new Promise(resolve => setTimeout(resolve, 1000));
     }
 
     const publicDir = path.join(process.cwd(), 'public');
