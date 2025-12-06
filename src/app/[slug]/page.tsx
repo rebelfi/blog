@@ -127,21 +127,21 @@ export default async function Page({ params: { slug } }: BlogPageProps) {
           <Container className="mx-auto my-16 max-w-7xl px-4 sm:px-6 md:my-20 md:px-8 lg:my-24">
             <div className="mb-12 text-center">
               <h2 className="mb-4 text-3xl font-bold text-gray-900 sm:text-4xl">
-                Latest <span className="text-gradient">Articles</span>
+                Latest <span className="text-rebel-purple-600">Articles</span>
               </h2>
-              <p className="mx-auto max-w-2xl text-xl text-gray-600">
+              <p className="mx-auto max-w-2xl text-lg text-gray-600">
                 Discover more insights and updates from the RebelFi ecosystem
               </p>
             </div>
 
             <ArticleTileGrid
-              className="grid-cols-1 gap-8 sm:grid-cols-2 md:gap-10 lg:grid-cols-3"
+              className="grid-cols-1 gap-6 sm:grid-cols-2 md:gap-8 lg:grid-cols-3"
               articles={latestPosts}
             />
 
             {/* View All Articles CTA */}
             <div className="mt-12 text-center">
-              <a href="/" className="btn-secondary px-8 py-4 text-lg">
+              <a href="/" className="btn-secondary px-6 py-3">
                 View All Articles
               </a>
             </div>

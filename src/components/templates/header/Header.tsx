@@ -10,10 +10,10 @@ export const Header = () => {
   const { t } = useTranslation();
 
   return (
-    <header className="glass sticky top-0 z-50 border-b border-gray-200 py-3">
+    <header className="glass sticky top-0 z-50 py-4">
       <nav>
         <Container className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-          <Link href="/" title={t('common.homepage')} className="group flex items-center">
+          <Link href="/" title={t('common.homepage')} className="group flex items-center gap-3">
             <Image
               src="https://rebelfi.nyc3.cdn.digitaloceanspaces.com/rebelfi/rebelfi_logo_long_purple.png"
               alt="RebelFi"
@@ -22,10 +22,13 @@ export const Header = () => {
               priority
               className="h-8 w-auto"
             />
-            <span className="ml-3 text-lg font-medium text-gray-600">Blog</span>
+            <div className="h-6 w-px bg-gray-300" />
+            <span className="text-sm font-semibold uppercase tracking-wider text-gray-500">
+              Blog
+            </span>
           </Link>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
             <button
               onClick={() => window.open('https://rebelfi.io', '_blank', 'noopener,noreferrer')}
               className="btn-primary hidden items-center gap-2 px-4 py-2 text-sm sm:flex"
@@ -43,7 +46,7 @@ export const Header = () => {
 
             <button
               onClick={() => window.open('https://rebelfi.io', '_blank', 'noopener,noreferrer')}
-              className="btn-primary p-2 sm:hidden"
+              className="btn-primary p-2.5 sm:hidden"
             >
               <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
@@ -54,8 +57,6 @@ export const Header = () => {
                 />
               </svg>
             </button>
-
-            <div className="rounded-lg border border-gray-200 bg-gray-100 p-1.5"></div>
           </div>
         </Container>
       </nav>

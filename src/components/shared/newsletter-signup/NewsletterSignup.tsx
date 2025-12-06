@@ -47,24 +47,24 @@ export const NewsletterSignup = () => {
   };
 
   return (
-    <div className="card-gradient p-8 text-center md:p-12">
+    <div className="rounded-md border border-gray-200 bg-white p-8 text-center shadow-sm md:p-12">
       <h3 className="mb-4 text-2xl font-bold text-gray-900 sm:text-3xl">
         Stay Updated with RebelFi
       </h3>
-      <p className="mx-auto mb-8 max-w-2xl text-lg text-gray-600">
+      <p className="mx-auto mb-8 max-w-2xl text-base text-gray-600">
         Get the latest DeFi insights, platform updates, and exclusive content delivered to your
         inbox.
       </p>
 
       <form onSubmit={handleSubmit} className="mx-auto max-w-md">
-        <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+        <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
           <input
             type="email"
             value={email}
             onChange={e => setEmail(e.target.value)}
             placeholder="Enter your email"
             disabled={isLoading}
-            className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-900 placeholder-gray-500 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-rebel-purple-400 disabled:opacity-50"
+            className="w-full rounded border border-gray-300 bg-white px-4 py-3 text-gray-900 placeholder-gray-500 transition-colors duration-150 focus:border-rebel-purple-500 focus:outline-none focus:ring-2 focus:ring-rebel-purple-500 focus:ring-offset-2 disabled:opacity-50"
             required
           />
           <button

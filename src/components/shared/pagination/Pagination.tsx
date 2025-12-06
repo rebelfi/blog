@@ -68,13 +68,13 @@ export const Pagination = ({
         {currentPage > 1 ? (
           <Link
             href={getPageUrl(currentPage - 1)}
-            className="rounded-lg border border-gray-300 p-2 transition-colors duration-200 hover:bg-gray-50"
+            className="rounded border border-gray-300 p-2 transition-colors duration-150 hover:border-gray-400 hover:bg-gray-50"
             aria-label="Go to previous page"
           >
             <ChevronLeftIcon className="h-5 w-5 text-gray-600" />
           </Link>
         ) : (
-          <div className="cursor-not-allowed rounded-lg border border-gray-200 p-2 opacity-50">
+          <div className="cursor-not-allowed rounded border border-gray-200 p-2 opacity-50">
             <ChevronLeftIcon className="h-5 w-5 text-gray-400" />
           </div>
         )}
@@ -84,7 +84,7 @@ export const Pagination = ({
           {pageNumbers.map((pageNumber, index) => {
             if (pageNumber === '...') {
               return (
-                <span key={`dots-${index}`} className="px-3 py-2 text-gray-500">
+                <span key={`dots-${index}`} className="px-3 py-2 text-gray-400">
                   ⋯
                 </span>
               );
@@ -97,7 +97,7 @@ export const Pagination = ({
               return (
                 <div
                   key={pageNumber}
-                  className="rounded-lg bg-gray-900 px-4 py-2 text-sm font-medium text-white"
+                  className="rounded bg-rebel-purple-600 px-4 py-2 text-sm font-semibold text-white"
                   aria-current="page"
                 >
                   {pageNumber}
@@ -109,7 +109,7 @@ export const Pagination = ({
               <Link
                 key={pageNumber}
                 href={getPageUrl(pageNum)}
-                className="rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 transition-colors duration-200 hover:bg-gray-50"
+                className="rounded border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 transition-colors duration-150 hover:border-gray-400 hover:bg-gray-50"
                 aria-label={`Go to page ${pageNumber}`}
               >
                 {pageNumber}
@@ -122,13 +122,13 @@ export const Pagination = ({
         {currentPage < totalPages ? (
           <Link
             href={getPageUrl(currentPage + 1)}
-            className="rounded-lg border border-gray-300 p-2 transition-colors duration-200 hover:bg-gray-50"
+            className="rounded border border-gray-300 p-2 transition-colors duration-150 hover:border-gray-400 hover:bg-gray-50"
             aria-label="Go to next page"
           >
             <ChevronRightIcon className="h-5 w-5 text-gray-600" />
           </Link>
         ) : (
-          <div className="cursor-not-allowed rounded-lg border border-gray-200 p-2 opacity-50">
+          <div className="cursor-not-allowed rounded border border-gray-200 p-2 opacity-50">
             <ChevronRightIcon className="h-5 w-5 text-gray-400" />
           </div>
         )}

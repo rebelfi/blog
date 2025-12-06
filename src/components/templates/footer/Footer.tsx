@@ -16,24 +16,6 @@ const socialLinks = [
       </svg>
     ),
   },
-  {
-    name: 'YouTube',
-    href: 'https://www.youtube.com/@RebelFi',
-    icon: (
-      <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
-        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
-      </svg>
-    ),
-  },
-  {
-    name: 'Medium',
-    href: 'https://medium.com/@rebelfi',
-    icon: (
-      <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
-        <path d="M13.54 12a6.8 6.8 0 01-6.77 6.82A6.8 6.8 0 010 12a6.8 6.8 0 016.77-6.82A6.8 6.8 0 0113.54 12zM20.96 12c0 3.54-1.51 6.42-3.38 6.42-1.87 0-3.39-2.88-3.39-6.42s1.52-6.42 3.39-6.42 3.38 2.88 3.38 6.42M24 12c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75S24 8.83 24 12z" />
-      </svg>
-    ),
-  },
 ];
 
 export const Footer = () => {
@@ -41,7 +23,7 @@ export const Footer = () => {
 
   return (
     <footer className="mt-20 border-t border-gray-200">
-      <div className="bg-gray-50 py-16">
+      <div className="bg-white py-16">
         <Container className="px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 gap-12 lg:grid-cols-4">
             {/* Brand Section */}
@@ -56,11 +38,11 @@ export const Footer = () => {
                 />
               </div>
 
-              <p className="mb-6 max-w-md text-lg leading-relaxed text-gray-600">
+              <p className="mb-6 max-w-md text-base leading-relaxed text-gray-600">
                 {t('footer.description')}
               </p>
 
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-3">
                 <Link
                   href="https://rebelfi.io"
                   target="_blank"
@@ -74,12 +56,14 @@ export const Footer = () => {
 
             {/* Quick Links */}
             <div>
-              <h3 className="mb-6 text-lg font-bold text-gray-900">Quick Links</h3>
-              <ul className="space-y-4">
+              <h3 className="mb-6 text-sm font-bold uppercase tracking-wider text-gray-900">
+                Quick Links
+              </h3>
+              <ul className="space-y-3">
                 <li>
                   <Link
                     href="/"
-                    className="text-gray-600 transition-colors duration-200 hover:text-gray-900"
+                    className="text-gray-600 transition-colors duration-150 hover:text-rebel-purple-600"
                   >
                     Home
                   </Link>
@@ -89,7 +73,7 @@ export const Footer = () => {
                     href="https://rebelfi.io"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-gray-600 transition-colors duration-200 hover:text-gray-900"
+                    className="text-gray-600 transition-colors duration-150 hover:text-rebel-purple-600"
                   >
                     Platform
                   </Link>
@@ -99,7 +83,7 @@ export const Footer = () => {
                     href="https://docs.rebelfi.io"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-gray-600 transition-colors duration-200 hover:text-gray-900"
+                    className="text-gray-600 transition-colors duration-150 hover:text-rebel-purple-600"
                   >
                     Documentation
                   </Link>
@@ -109,17 +93,19 @@ export const Footer = () => {
 
             {/* Community */}
             <div>
-              <h3 className="mb-6 text-lg font-bold text-gray-900">Community</h3>
-              <ul className="space-y-4">
+              <h3 className="mb-6 text-sm font-bold uppercase tracking-wider text-gray-900">
+                Community
+              </h3>
+              <ul className="space-y-3">
                 {socialLinks.map(link => (
                   <li key={link.name}>
                     <a
                       href={link.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="group flex items-center gap-3 text-gray-600 transition-colors duration-200 hover:text-gray-900"
+                      className="group flex items-center gap-3 text-gray-600 transition-colors duration-150 hover:text-rebel-purple-600"
                     >
-                      <div className="rounded-lg bg-gray-200 p-2 transition-colors duration-200 group-hover:bg-gray-300">
+                      <div className="rounded border border-gray-200 bg-gray-50 p-2 transition-colors duration-150 group-hover:border-rebel-purple-200 group-hover:bg-rebel-purple-50">
                         {link.icon}
                       </div>
                       {link.name}

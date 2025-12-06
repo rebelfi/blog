@@ -90,7 +90,7 @@ export default async function Page({ searchParams }: LandingPageProps) {
         {page.featuredBlogPost && (
           <div className="mb-12">
             <div className="mb-6 flex items-center gap-3">
-              <div className="h-3 w-3 rounded-full bg-gradient-rebel"></div>
+              <div className="h-3 w-3 rounded bg-rebel-purple-600"></div>
               <h2 className="text-2xl font-bold text-gray-900">Featured Article</h2>
             </div>
             <ArticleHero article={page.featuredBlogPost} />
@@ -101,9 +101,9 @@ export default async function Page({ searchParams }: LandingPageProps) {
         <div className="mb-12">
           <div className="mb-8">
             <h2 className="mb-4 text-3xl font-bold text-gray-900">
-              Latest <span className="text-gradient">Articles</span>
+              Latest <span className="text-rebel-purple-600">Articles</span>
             </h2>
-            <p className="text-lg text-gray-600">
+            <p className="text-base text-gray-600">
               Stay updated with the latest developments in DeFi, blockchain technology, and RebelFi
               platform updates.
             </p>
@@ -113,7 +113,7 @@ export default async function Page({ searchParams }: LandingPageProps) {
             articles={posts}
             total={total}
             currentPage={currentPage}
-            className="grid-cols-1 gap-8 sm:grid-cols-2 md:gap-10 lg:grid-cols-3"
+            className="grid-cols-1 gap-6 sm:grid-cols-2 md:gap-8 lg:grid-cols-3"
           />
         </div>
       </Container>

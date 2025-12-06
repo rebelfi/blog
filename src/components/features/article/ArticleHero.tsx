@@ -35,7 +35,7 @@ export const ArticleHero = ({
       <div className="relative cursor-pointer">
         <div
           className={twMerge(
-            `card-gradient group flex flex-col overflow-hidden rounded-xl`,
+            `group flex flex-col overflow-hidden rounded-md border border-gray-200 bg-white shadow-sm transition-all duration-200 hover:border-gray-300 hover:shadow-md`,
             isReversedLayout ? 'lg:flex-row-reverse' : 'lg:flex-row',
           )}
         >
@@ -43,14 +43,11 @@ export const ArticleHero = ({
             className="relative max-h-[350px] flex-1 basis-1/2 overflow-hidden md:max-h-[400px]"
             {...inspectorProps({ fieldId: 'featuredImage' })}
           >
-            {/* Image Overlay */}
-            <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/30 via-transparent to-transparent"></div>
-
             {article.featuredImage && (
               <CtfImage
                 nextImageProps={{
                   className:
-                    'w-full h-full object-cover group-hover:scale-105 transition-transform duration-500',
+                    'w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-500',
                   priority: true,
                   sizes: '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw',
                 }}
@@ -59,19 +56,19 @@ export const ArticleHero = ({
             )}
 
             {/* Category Badge */}
-            <div className="absolute top-4 left-4 z-20">
-              <div className="rounded-full border border-gray-200 bg-white/90 px-3 py-1 backdrop-blur-sm">
-                <span className="text-xs font-medium text-gray-900">DeFi</span>
-              </div>
+            <div className="absolute left-4 top-4 z-20">
+              <span className="inline-block rounded bg-rebel-purple-600 px-3 py-1.5 text-xs font-semibold uppercase tracking-wide text-white">
+                DeFi
+              </span>
             </div>
           </div>
 
-          <div className="flex flex-1 basis-1/2 flex-col justify-center py-6 px-6 sm:py-8 md:py-10 lg:px-12 lg:py-12 xl:px-16">
+          <div className="flex flex-1 basis-1/2 flex-col justify-center px-6 py-6 sm:py-8 md:py-10 lg:px-12 lg:py-12 xl:px-16">
             <div className="mb-4 flex flex-wrap items-center justify-between">
               {isFeatured && (
                 <ArticleLabel
                   className={twMerge(
-                    'rounded-full bg-gradient-rebel px-4 py-2 text-sm font-medium text-white',
+                    'rounded bg-rebel-purple-600 px-4 py-2 text-sm font-medium text-white',
                     isReversedLayout ? 'lg:order-2' : '',
                   )}
                 >
@@ -99,7 +96,7 @@ export const ArticleHero = ({
             </div>
 
             <h1
-              className="group-hover:text-gradient mb-4 text-2xl font-bold leading-tight text-gray-900 transition-all duration-300 sm:text-3xl md:text-4xl lg:text-5xl"
+              className="mb-4 text-2xl font-bold leading-tight text-gray-900 transition-colors duration-300 group-hover:text-rebel-purple-600 sm:text-3xl md:text-4xl lg:text-5xl"
               {...inspectorProps({ fieldId: 'title' })}
             >
               {title}
@@ -114,16 +111,19 @@ export const ArticleHero = ({
               </p>
             )}
 
-            <div className="flex items-center gap-2 text-sm text-gray-500">
-              <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
-              </svg>
-              <span>5 min read</span>
+            <div className="flex items-center gap-4">
+              <span className="btn-primary px-5 py-2.5 text-sm">Read Article</span>
+              <div className="flex items-center gap-2 text-sm text-gray-500">
+                <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+                <span>5 min read</span>
+              </div>
             </div>
           </div>
         </div>
